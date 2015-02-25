@@ -11,9 +11,9 @@ class JrFormPresenter < JrFormAttributes
   end
 
   def submit
-    set_params_for_activty
+    contact = manipulate_or_create_user
 
-    manipulate_or_create_user
+    set_params_for_activty(contact)
 
     activity = JustRelate::Activity.create(@params)
 
@@ -44,11 +44,12 @@ class JrFormPresenter < JrFormAttributes
     contact.update({tags: tags})
   end
 
-  def set_params_for_activty
+  def set_params_for_activty(contact)
     if @params["title"] == ""
       @params["title"] = @activity.id
     end
 
+    @params["contact_ids"] = contact.id
     @params["type_id"] = @activity.id
     @params["state"] = 'created'
   end
