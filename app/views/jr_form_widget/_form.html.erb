@@ -1,0 +1,12 @@
+<%= form_for JrFormPresenter.new(widget, request, controller), url: scrivito_path(widget.obj), html: { class: "form-horizontal"} do |form| %>
+  <% if widget.subject %>
+    <%= form.hidden_field(:title, value: widget.subject) %>
+  <% end %>
+
+  <% widget.attributes.each do |name, options| %>
+    <%= render "jr_form_widget/jr_#{options["attribute_type"]}", form: form, name: name, options: options %>
+  <% end %>
+
+  <%= form.submit widget.submit_button, class: "btn btn-primary pull-right" %>
+
+<% end %>

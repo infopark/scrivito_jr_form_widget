@@ -1,0 +1,16 @@
+<div class="details-view">
+  <h4>Activity</h4>
+  <%= scrivito_toggle_button_editor widget, :activity_id, JrFormWidget.activities.map { |a| a.id } %>
+
+  <h4>Subject</h4>
+  <%= scrivito_tag :div, widget, :subject %>
+
+  <h4>Tags <abbr title="optional attribute. can be used to add tags to a contact like has_visited_event. contatc will be calculated by the custom attributes email and last_name of your selected activtiy. If this fields do not exist, this field has no effect." class="initialism"></abbr></h4>
+  <%= scrivito_tag :div, widget, :tags, data: {editor: 'scrivito-list-editor'} %>
+
+  <h4>Redirect after submit</h4>
+  <%= scrivito_tag :div, widget, :redirect_to %>
+
+  <h4>Text on submitbutton</h4>
+  <%= scrivito_tag :div, widget, :submit_button_text %>
+</div>
