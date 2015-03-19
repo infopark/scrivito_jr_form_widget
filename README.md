@@ -38,6 +38,7 @@ Add this lines to your application's `Gemfile`:
 
     gem 'scrivito_jr_form_widget'
     gem 'scrivito_advanced_editors'
+    gem 'active_attr'
 
 You need a Model with name `JrFormAttribtues`. It is used by the presenter to make your custom attributes accessible by the form. You can define prefill values here.
 
