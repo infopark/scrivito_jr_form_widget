@@ -1,4 +1,9 @@
 class JrFormPresenter < JrFormAttributes
+
+  def attribute_names
+    @type.standard_attrs.keys + @type.custom_attrs.keys
+  end
+
   def initialize(widget, request, controller)
     @widget = widget
     @activity = widget.activity
@@ -11,9 +16,19 @@ class JrFormPresenter < JrFormAttributes
   end
 
   def submit
-    contact = manipulate_or_create_user
+    contact = nil
+    
+    if @params['custom_email'] && @params['custom_last_name']
+      contact = manipulate_or_create_user
+    end
 
-    set_params_for_activty(contact)
+    if contact
+      set_params_for_activty(contact)
+    end
+
+    @params["title"] = @params[:title].empty? ? @activity.id : @params[:title]
+    @params["type_id"] = @activity.id
+    @params["state"] = 'created'
 
     activity = JustRelate::Activity.create(@params)
 
@@ -50,8 +65,6 @@ class JrFormPresenter < JrFormAttributes
     end
 
     @params["contact_ids"] = contact.id
-    @params["type_id"] = @activity.id
-    @params["state"] = 'created'
   end
 
   def redirect_path(page, widget)

@@ -1,0 +1,6 @@
+<div class="form-group">
+  <%= form.label name.to_sym, class: "control-label col-sm-3 #{options[:mandatory] ? 'mandatory' : ''}" %>
+  <div class="col-sm-9">
+    <%= form.select name.to_sym, options['valid_values'], {}, {multiple: true, class: 'form-control'} %>
+  </div>
+</div>
