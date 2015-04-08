@@ -28,7 +28,7 @@ class JrFormPresenter < JrFormAttributes
 
     @params["title"] = @params[:title].empty? ? @activity.id : @params[:title]
     @params["type_id"] = @activity.id
-    @params["state"] = 'created'
+    @params["state"] = @activity.attributes['states'].first
 
     activity = JustRelate::Activity.create(@params)
 

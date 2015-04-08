@@ -12,11 +12,11 @@ Add this lines to your application's `Gemfile`:
 
 Add this line to your stylsheet manifest:
     
-    *= require scrivito_jr_fomr_widget
+    *= require scrivito_jr_form_widget
 
 Add this line to your Javascript manifest:
 
-    //= require scrivito_jr_fomr_widget    
+    //= require scrivito_jr_form_widget    
 
 Create a Model with name `JrFormAttribtues`. It is used by the presenter to make your custom attributes accessible by the form. You can define prefill values here.
 
