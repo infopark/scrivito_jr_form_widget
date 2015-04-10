@@ -3,7 +3,7 @@ class CreateCrmFormWidget < ::Scrivito::Migration
     Scrivito::ObjClass.create(
       name: 'CrmFormWidget',
       type: 'publication',
-      title: 'Just Relate Fromular Widget',
+      title: 'CRM Fromular Widget',
       attributes: [
         {name: "activity_id", type: "string"},
         {name: "subject", type: "string"},

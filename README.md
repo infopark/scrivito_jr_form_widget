@@ -2,7 +2,7 @@
 
 ## Description
 
-A Widget for Scrivito to add an formular based on an activity type from Justrelate using API 2.
+A Widget for Scrivito to add an formular based on an activity type from Crm using API 2.
 
 ## Installation
 
@@ -69,7 +69,7 @@ If the creation of a new activity fails at a form submit, the `flash[:alert]` va
 
 You can use this to create a message for the user.
 
-Using more than one Page with your just relate and activities should be seperated. You can add a hook with your separation strategy. Simply add the method `self.crm_activity_filter` to your obj.rb.
+Using more than one Page with your crm and activities should be seperated. You can add a hook with your separation strategy. Simply add the method `self.crm_activity_filter` to your obj.rb.
 
     def self.crm_activity_filter
       Crm::Type.all.select { |a| a.id.starts_with? 'page-' }
