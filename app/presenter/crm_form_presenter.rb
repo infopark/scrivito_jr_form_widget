@@ -30,18 +30,18 @@ class JrFormPresenter < JrFormAttributes
     @params["type_id"] = @activity.id
     @params["state"] = @activity.attributes['states'].first
 
-    activity = JustRelate::Activity.create(@params)
+    activity = Crm::Activity.create(@params)
 
     return {status: "success", message: "Your form was send successfully"}
-  rescue JustRelate::Errors::InvalidValues => e
+  rescue Crm::Errors::InvalidValues => e
     return {status: "error", message: e.validation_errors}
   end
 
   private
   def manipulate_or_create_user
-    contact = JustRelate::Contact.where(:email, :equals, @params['custom_email']).and(:last_name, :equals, @params['custom_last_name']).first
+    contact = Crm::Contact.where(:email, :equals, @params['custom_email']).and(:last_name, :equals, @params['custom_last_name']).first
     unless contact
-      contact = JustRelate::Contact.create({
+      contact = Crm::Contact.create({
         first_name: @params['custom_first_name'],
         last_name: @params['custom_last_name'],
         email: @params['custom_email'],

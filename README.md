@@ -72,7 +72,7 @@ You can use this to create a message for the user.
 Using more than one Page with your just relate and activities should be seperated. You can add a hook with your separation strategy. Simply add the method `self.jr_activity_filter` to your obj.rb.
 
     def self.jr_activity_filter
-      JustRelate::Type.all.select { |a| a.id.starts_with? 'page-' }
+      Crm::Type.all.select { |a| a.id.starts_with? 'page-' }
     end
 
 This will select activities by its id.
