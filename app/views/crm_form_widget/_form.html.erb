@@ -4,7 +4,7 @@
   <% end %>
 
   <% widget.attributes.each do |name, options| %>
-    <%= render "jr_form_widget/jr_#{options["attribute_type"]}", form: form, name: name, options: options %>
+    <%= render "crm_form_widget/crm_#{options["attribute_type"]}", form: form, name: name, options: options %>
   <% end %>
 
   <%= form.submit widget.submit_button, class: "btn btn-primary pull-right" %>

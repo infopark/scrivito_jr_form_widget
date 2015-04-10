@@ -8,7 +8,7 @@ class CrmFormPresenter < CrmFormAttributes
     @widget = widget
     @activity = widget.activity
     @page = widget.obj
-    @params = request.params["jr_form_presenter"]
+    @params = request.params["crm_form_presenter"]
 
     if request.post?
       redirect_after_submit(controller, widget, self.submit)

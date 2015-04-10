@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    scrivito_jr_form_widget (0.0.5)
+    scrivito_crm_form_widget (0.0.5)
       active_attr
       bundler
       scrivito_advanced_editors
@@ -120,4 +120,4 @@ PLATFORMS
 
 DEPENDENCIES
   rake
-  scrivito_jr_form_widget!
+  scrivito_crm_form_widget!

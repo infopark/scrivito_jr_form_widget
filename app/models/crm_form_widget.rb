@@ -2,7 +2,7 @@ class CrmFormWidget < Widget
   include Crm
 
   def self.activities
-    Obj.try(:jr_activity_filter) || Crm::Type.all.to_a
+    Obj.try(:crm_activity_filter) || Crm::Type.all.to_a
   end
 
   def attributes
