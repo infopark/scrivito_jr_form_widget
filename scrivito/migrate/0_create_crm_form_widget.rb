@@ -1,7 +1,7 @@
-class CreateJrFormWidget < ::Scrivito::Migration
+class CreateCrmFormWidget < ::Scrivito::Migration
   def up
     Scrivito::ObjClass.create(
-      name: 'JrFormWidget',
+      name: 'CrmFormWidget',
       type: 'publication',
       title: 'Just Relate Fromular Widget',
       attributes: [

@@ -1,4 +1,4 @@
-class JrFormWidget < Widget
+class CrmFormWidget < Widget
   include Crm
 
   def self.activities

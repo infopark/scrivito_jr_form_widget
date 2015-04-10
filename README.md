@@ -18,10 +18,10 @@ Add this line to your Javascript manifest:
 
     //= require scrivito_jr_form_widget    
 
-Create a Model with name `JrFormAttribtues`. It is used by the presenter to make your custom attributes accessible by the form. You can define prefill values here.
+Create a Model with name `CrmFormAttribtues`. It is used by the presenter to make your custom attributes accessible by the form. You can define prefill values here.
 
 ```ruby
-class JrFormAttributes
+class CrmFormAttributes
   include ActiveModel::Model
 
   attr_accessor :custom_attribute_1, :custom_attribute_2, ...

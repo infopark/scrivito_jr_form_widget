@@ -1,4 +1,4 @@
-class JrFormPresenter < JrFormAttributes
+class CrmFormPresenter < CrmFormAttributes
 
   def attribute_names
     @type.standard_attrs.keys + @type.custom_attrs.keys

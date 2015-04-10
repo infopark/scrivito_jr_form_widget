@@ -1,8 +1,8 @@
 require 'scrivito_advanced_editors'
 require 'active_attr'
 
-module ScrivitoJrFormWidget
+module ScrivitoCrmFormWidget
   class Engine < ::Rails::Engine
-    isolate_namespace ScrivitoJrFormWidget
+    isolate_namespace ScrivitoCrmFormWidget
   end
 end

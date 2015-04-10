@@ -1,4 +1,4 @@
-<%= form_for JrFormPresenter.new(widget, request, controller), url: scrivito_path(widget.obj), html: { class: "form-horizontal"} do |form| %>
+<%= form_for CrmFormPresenter.new(widget, request, controller), url: scrivito_path(widget.obj), html: { class: "form-horizontal"} do |form| %>
   <% if widget.subject %>
     <%= form.hidden_field(:title, value: widget.subject) %>
   <% end %>
