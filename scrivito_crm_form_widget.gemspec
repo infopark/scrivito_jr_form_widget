@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'bundler'
   s.add_dependency 'scrivito_sdk'
   s.add_dependency 'scrivito_advanced_editors'
+  s.add_dependency 'infopark_webcrm_sdk'
   s.add_dependency 'active_attr'
 
   s.add_development_dependency 'rake'
