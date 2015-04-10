@@ -1,8 +1,8 @@
-class JrFormWidget < Widget
-  include JustRelate
+class CrmFormWidget < Widget
+  include Crm
 
   def self.activities
-    Obj.try(:jr_activity_filter) || JustRelate::Type.all.to_a
+    Obj.try(:crm_activity_filter) || Crm::Type.all.to_a
   end
 
   def attributes
@@ -10,7 +10,7 @@ class JrFormWidget < Widget
   end
 
   def activity
-    JustRelate::Type.find(activity_id)
+    Crm::Type.find(activity_id)
   end
 
   def activity_id?
