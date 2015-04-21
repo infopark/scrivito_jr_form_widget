@@ -24,6 +24,7 @@ class JrFormPresenter < JrFormAttributes
 
     if contact
       set_params_for_activty(contact)
+      add_contact_to_event(contact) if @widget.event_id.present?
     end
 
     @params["title"] = @params[:title].empty? ? @activity.id : @params[:title]
@@ -52,6 +53,14 @@ class JrFormPresenter < JrFormAttributes
     add_tags_to(contact)
 
     return contact
+  end
+
+  def add_contact_to_event(contact)
+    JustRelate::EventContact.create({
+      contact_id: contact.id,
+      event_id: @widget.event_id,
+      state: 'registered'
+    })
   end
 
   def add_tags_to(contact)

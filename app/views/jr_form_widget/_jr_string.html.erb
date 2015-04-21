@@ -1,6 +1,6 @@
 <div class="form-group">
   <%= form.label name.to_sym, class: "control-label col-sm-3 #{options[:mandatory] ? 'mandatory' : ''}" %>
   <div class="col-sm-9">
-    <%= form.text_field name.to_sym, class: "form-control" %>
+    <%= form.text_field name.to_sym, class: "form-control", maxlength: options[:maxlength] %>
   </div>
 </div>

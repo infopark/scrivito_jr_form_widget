@@ -1,6 +1,13 @@
 <div class="form-group">
   <%= form.label name.to_sym, class: "control-label col-sm-3 #{options[:mandatory] ? 'mandatory' : ''}" %>
   <div class="col-sm-9">
-    <%= form.select name.to_sym, options['valid_values'], {}, {multiple: true, class: 'form-control'} %>
+    <% options['valid_values'].each do |value| %>
+      <div class="^checkbox">
+        <%= form.label "#{name}_#{value.downcase}" do %>
+          <%= form.check_box name.to_sym, value %>
+          <%= t("helpers.label.jr_form_presenter.#{name}_option.#{value.downcase}") %>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>

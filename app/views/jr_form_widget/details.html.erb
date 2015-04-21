@@ -3,6 +3,7 @@
     <li class="active" data-panel-target="#edit-general">General</li>
     <li data-panel-target="#edit-tags">Tags</li>
     <li data-panel-target="#edit-activity">Activity</li>
+    <li data-panel-target="#edit-event">Event</li>
   </ul>
 
   <div class="tab-panels">
@@ -24,6 +25,15 @@
     <div class="tab-panel" id="edit-activity">
       <h4>Activity</h4>
       <%= scrivito_toggle_button_editor widget, :activity_id, JrFormWidget.activities.map { |a| a.id } %>
+    </div>
+
+    <div class="tab-panel" id="edit-event">
+      <h4>Activity</h4>
+      <%= scrivito_toggle_button_editor widget, :event_id, JrFormWidget.events do |event|
+          scrivito_tag(:button, widget, :event_id, data: {editor: 'scrivito-toggle-button', content: event.id}) do
+            event.name
+          end
+        end %>
     </div>
   </div>
 </div>
