@@ -64,8 +64,10 @@ class JrFormPresenter < JrFormAttributes
   end
 
   def add_tags_to(contact)
-    tags = contact.tags + @widget.tags.split("|")
-    contact.update({tags: tags})
+    if @widget.tags
+      tags = contact.tags + @widget.tags.split("|")
+      contact.update({tags: tags})
+    end
   end
 
   def set_params_for_activty(contact)

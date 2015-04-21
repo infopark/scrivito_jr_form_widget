@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    scrivito_jr_form_widget (0.0.6)
+    scrivito_jr_form_widget (0.0.7)
       active_attr
       bundler
       scrivito_advanced_editors
