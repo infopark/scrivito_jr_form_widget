@@ -1,0 +1,7 @@
+<% if widget.activity_id? %>
+  <%= render 'crm_form_widget/form', widget: widget %>
+<% else %>
+  <div class="alert alert-warning">
+    Select an activty in the details view.
+  </div>
+<% end %>

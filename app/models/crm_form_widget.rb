@@ -1,5 +1,5 @@
-class JrFormWidget < Widget
-  include JustRelate
+class CrmFormWidget < Widget
+  include Crm
 
   attribute :activity_id, :string
   attribute :event_id, :string
@@ -9,7 +9,7 @@ class JrFormWidget < Widget
   attribute :submit_button_text, :string
 
   def self.activities
-    Obj.try(:jr_activity_filter) || JustRelate::Type.all.select {|i| i.item_base_type == "Activity"}
+    Obj.try(:crm_activity_filter) || Crm::Type.all.select {|i| i.item_base_type == "Activity"}
   end
 
   def attributes
@@ -17,7 +17,7 @@ class JrFormWidget < Widget
   end
 
   def activity
-    JustRelate::Type.find(activity_id)
+    Crm::Type.find(activity_id)
   end
 
   def activity_id?
@@ -29,6 +29,6 @@ class JrFormWidget < Widget
   end
 
   def self.events
-    Obj.try(:jr_activity_filter) || JustRelate::Event.all.to_a
+    Obj.try(:crm_activity_filter) || Crm::Event.all.to_a
   end
 end

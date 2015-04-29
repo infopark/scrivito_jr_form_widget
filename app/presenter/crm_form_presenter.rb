@@ -1,4 +1,4 @@
-class JrFormPresenter < JrFormAttributes
+class CrmFormPresenter < CrmFormAttributes
 
   def attribute_names
     @type.standard_attrs.keys + @type.custom_attrs.keys
@@ -8,7 +8,7 @@ class JrFormPresenter < JrFormAttributes
     @widget = widget
     @activity = widget.activity
     @page = widget.obj
-    @params = request.params["jr_form_presenter"]
+    @params = request.params["crm_form_presenter"]
 
     if request.post?
       redirect_after_submit(controller, widget, self.submit)
@@ -31,18 +31,18 @@ class JrFormPresenter < JrFormAttributes
     @params["type_id"] = @activity.id
     @params["state"] = @activity.attributes['states'].first
 
-    activity = JustRelate::Activity.create(@params)
+    activity = Crm::Activity.create(@params)
 
     return {status: "success", message: "Your form was send successfully"}
-  rescue JustRelate::Errors::InvalidValues => e
+  rescue Crm::Errors::InvalidValues => e
     return {status: "error", message: e.validation_errors}
   end
 
   private
   def manipulate_or_create_user
-    contact = JustRelate::Contact.where(:email, :equals, @params['custom_email']).and(:last_name, :equals, @params['custom_last_name']).first
+    contact = Crm::Contact.where(:email, :equals, @params['custom_email']).and(:last_name, :equals, @params['custom_last_name']).first
     unless contact
-      contact = JustRelate::Contact.create({
+      contact = Crm::Contact.create({
         first_name: @params['custom_first_name'],
         last_name: @params['custom_last_name'],
         email: @params['custom_email'],
@@ -56,7 +56,7 @@ class JrFormPresenter < JrFormAttributes
   end
 
   def add_contact_to_event(contact)
-    JustRelate::EventContact.create({
+    Crm::EventContact.create({
       contact_id: contact.id,
       event_id: @widget.event_id,
       state: 'registered'

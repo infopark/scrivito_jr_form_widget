@@ -1,27 +1,31 @@
-# scrivito_jr_form_widget
+# scrivito_crm_form_widget
 
 ## Description
 
-A Widget for Scrivito to add an formular based on an activity type from Justrelate using API 2.
+A Widget for Scrivito to add an formular based on an activity type from Infopark Crm using API 2.
+
+If your activity has the fields `email` and `last_name` the contact will can be found. If no contact is found it will be created. The new activity is added to it. The form provides `Tags`. They will be add to the contact.
+
+The editor can now select an event on details view. The fields `email` an `last_name` have to exist. Than the found or new created contact will be added to the event as event_contact.
 
 ## Installation
 
 Add this lines to your application's `Gemfile`:
 
-    gem 'scrivito_jr_form_widget'
+    gem 'scrivito_crm_form_widget'
 
 Add this line to your stylsheet manifest:
     
-    *= require scrivito_jr_form_widget
+    *= require scrivito_crm_form_widget
 
 Add this line to your Javascript manifest:
 
-    //= require scrivito_jr_form_widget    
+    //= require scrivito_crm_form_widget
 
 Create a Model with name `JrFormAttribtues`. It is used by the presenter to make your custom attributes accessible by the form. You can define prefill values here.
 
 ```ruby
-class JrFormAttributes
+class CrmFormAttributes
   include ActiveModel::Model
 
   attr_accessor :custom_attribute_1, :custom_attribute_2, ...
@@ -32,12 +36,18 @@ class JrFormAttributes
 end
 ```
 
-And then execute:
+## Localization
 
-    $ bundle
-    $ rake scrivito:migrate:install
-    $ rake scrivito:migrate
-    $ rake scrivito:migrate:publish
+You can loaclize your labels with i18n:
+
+```yml
+de:
+  helpers:
+    label:
+      crm_form_presenter:
+        custom_attribute_1: 'Foo'
+        custom_attribute_2: 'Bar'
+```
 
 ## Customization
 
@@ -47,7 +57,7 @@ The label of every field gets the class `mandatory` if the field is marked as ma
       content: "*";
     }
 
-If the creation of a new activity fails at a form submit, the `flash[:alert]` value is set. Just Relate SDK message will used as flash message. It will look like this:
+If the creation of a new activity fails at a form submit, the `flash[:alert]` value is set. Crm SDK message will used as flash message. It will look like this:
 
     [
      {
@@ -69,10 +79,10 @@ If the creation of a new activity fails at a form submit, the `flash[:alert]` va
 
 You can use this to create a message for the user.
 
-Using more than one Page with your just relate and activities should be seperated. You can add a hook with your separation strategy. Simply add the method `self.jr_activity_filter` to your obj.rb.
+Using more than one Page with your just relate and activities should be seperated. You can add a hook with your separation strategy. Simply add the method `self.crm_activity_filter` to your obj.rb.
 
-    def self.jr_activity_filter
-      JustRelate::Type.all.select { |a| a.id.starts_with? 'page-' }
+    def self.crm_activity_filter
+      Crm::Type.all.select { |a| a.id.starts_with? 'page-' }
     end
 
 This will select activities by its id.
@@ -85,7 +95,7 @@ Insert Widget. Initaly the editor will see a note telling him he has to select a
 
 #### Activity
 
-Is a toggle button select from all types in your Just Relate CRM.
+Is a toggle button select from all types in your Infopark CRM.
 
 #### Subject
 
