@@ -10,14 +10,15 @@ class CrmFormPresenter < CrmFormAttributes
     @page = widget.obj
     @params = request.params["crm_form_presenter"]
 
-    if request.post?
+    if request.post? && widget.id == @params[:widget_id]
+      @params.delete("widget_id")
       redirect_after_submit(controller, widget, self.submit)
     end
   end
 
   def submit
     contact = nil
-    
+
     if @params['custom_email'] && @params['custom_last_name']
       contact = manipulate_or_create_user
     end

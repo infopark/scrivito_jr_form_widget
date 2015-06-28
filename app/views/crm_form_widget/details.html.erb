@@ -22,7 +22,7 @@
   <div class="tab-panel" id="edit-tags">
     <%= scrivito_details_for 'Tags for Contact' do %>
       <div class="alert alert-info">
-        optional attribute. can be used to add tags to a contact like has_visited_event. contatc will be calculated by the custom attributes email and last_name of your selected activtiy. If this fields do not exist, this field has no effect." class="initialism">
+        optional attribute. can be used to add tags to a contact like has_visited_event. contatc will be calculated by the custom attributes email and last_name of your selected activtiy. If this fields do not exist, this field has no effect.
       </div>
       <%= scrivito_tag :div, widget, :tags, data: {editor: 'scrivito-list-editor'} %>
     <% end %>
@@ -36,7 +36,7 @@
 
   <div class="tab-panel" id="edit-event">
     <%= scrivito_details_for 'Event' do %>
-      <%= scrivito_toggle_button_editor(widget, :event_id, CrmFormWidget.events) do |event| %>
+      <%- scrivito_toggle_button_editor(widget, :event_id, CrmFormWidget.events) do |event| %>
         <%= scrivito_tag(:button, widget, :event_id, data: {editor: 'scrivito-toggle-button', content: event.id}) do %>
           <%= event.title %>
         <% end %>
