@@ -2,11 +2,11 @@
 
 ## Description
 
-A Widget for Scrivito to add an formular based on an activity type from Infopark Crm using API 2.
+A Widget for Scrivito to add a formular based on an activity type from Infopark Crm using API 2.
 
-If your activity has the fields `email` and `last_name` the contact will can be found. If no contact is found it will be created. The new activity is added to it. The form provides `Tags`. They will be add to the contact.
+If your activity has the fields `email` and `last_name` a contact based on this data will be found. If no contact is found it will be created. The new activity is added to it. The form provides `Tags`. They will be add to the contact.
 
-The editor can now select an event on details view. The fields `email` an `last_name` have to exist. Than the found or new created contact will be added to the event as event_contact.
+The editor can also select an event on details view. The fields `email` an `last_name` have to exist. Than the found or new created contact will be added to the event as event_contact.
 
 ## Installation
 
@@ -15,7 +15,7 @@ Add this lines to your application's `Gemfile`:
     gem 'scrivito_crm_form_widget'
 
 Add this line to your stylsheet manifest:
-    
+
     *= require scrivito_crm_form_widget
 
 Add this line to your Javascript manifest:
@@ -41,7 +41,7 @@ end
 You can loaclize your labels with i18n:
 
 ```yml
-de:
+en:
   helpers:
     label:
       crm_form_presenter:
@@ -103,17 +103,17 @@ Will be used as title at an created activty. You can use the same type on differ
 
 #### Tags
 
-If your type have the fields `custom_email` and `custom_last_name` a contact from crm can by found. If tags are set they will be add to the contact. So you can see if a contact has filled in a special from like newsletter subscription or event subscription.
+If your type have the fields `custom_email` and `custom_last_name` a contact from crm can be found. If tags are set they will be added to the contact. So you can see if a contact has filled in a special from like newsletter subscription or event subscription.
 
 #### Redirect after submit
 
-If set the formsubmit will redirect to the given page. If the specified obj is a binary object, it will redirect to its binary_url. If not set, the form will redirect to the page where it is on.
+If set the formsubmit will redirect to the given destination. If the specified obj is a binary object, it will redirect to its binary_url. If not set, the form will redirect to the page where it is on.
 
-This Feature can be used to create a soft way for getting Seminar Downloads where you want a feedback.
+This Feature can be used to create a soft way for getting Seminar Downloads and get the feedback.
 
 #### Text on submit button
 
-Writes the text to hte submit button. Default is `send`.
+Writes the text to the submit button. Default is `send`.
 
 ## Contributing
 
