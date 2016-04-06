@@ -1,4 +1,5 @@
-class CrmFormPresenter < CrmFormAttributes
+class CrmFormPresenter
+  include ActiveModel::Model
 
   def attribute_names
     @type.standard_attrs.keys + @type.custom_attrs.keys
@@ -11,37 +12,59 @@ class CrmFormPresenter < CrmFormAttributes
     @params = request.params["crm_form_presenter"]
 
     if request.post? && widget.id == @params[:widget_id]
-      @params.delete("widget_id")
       redirect_after_submit(controller, widget, self.submit)
     end
   end
 
   def submit
-    contact = nil
-
-    if @params['custom_email'] && @params['custom_last_name']
-      contact = manipulate_or_create_user
+    if @params['email'].present?
+      raise 'No human exeception'
+    else
+      @params.delete('email')
     end
-
-    if contact
-      set_params_for_activty(contact)
-      add_contact_to_event(contact) if @widget.event_id.present?
-    end
-
-    @params["title"] = @params[:title].empty? ? @activity.id : @params[:title]
-    @params["type_id"] = @activity.id
-    @params["state"] = @activity.attributes['states'].first
-
-    activity = Crm::Activity.create(@params)
-
+    prepare_contact(@params['custom_email'], @params['custom_last_name'])
+    prepare_activity_params
+    Crm::Activity.create(@params)
     return {status: "success", message: "Your form was send successfully"}
   rescue Crm::Errors::InvalidValues => e
     return {status: "error", message: e.validation_errors}
   end
 
   private
-  def manipulate_or_create_user
-    contact = Crm::Contact.where(:email, :equals, @params['custom_email']).and(:last_name, :equals, @params['custom_last_name']).first
+  def prepare_activity_params
+    dynamic_params = set_dynamic_params
+    @params[:comment_notes] = dynamic_params if dynamic_params.present?
+
+    @params.delete("widget_id")
+    @params["title"] = @params[:title].empty? ? @activity.id : @params[:title]
+    @params["type_id"] = @activity.id
+    @params["state"] = @activity.attributes['states'].first
+  end
+
+  def set_dynamic_params
+    dynamic_params = {};
+    @params.each do |key, value|
+      if key.starts_with? 'dynamic_'
+        dynamic_params[key] = value
+        @params.delete(key)
+      end
+    end
+    return dynamic_params
+  end
+
+
+  def prepare_contact(email, last_name)
+    if email && last_name
+      contact = manipulate_or_create_user(email, last_name)
+      if contact
+        set_params_for_activty(contact)
+        add_contact_to_event(contact) if @widget.event_id.present?
+      end
+    end
+  end
+
+  def manipulate_or_create_user(email, last_name)
+    contact = Crm::Contact.where(:email, :equals, email).and(:last_name, :equals, last_name).first
     unless contact
       contact = Crm::Contact.create({
         first_name: @params['custom_first_name'],

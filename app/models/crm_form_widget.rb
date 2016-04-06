@@ -7,9 +7,14 @@ class CrmFormWidget < Widget
   attribute :tags, :string
   attribute :redirect_to, :reference
   attribute :submit_button_text, :string
+  attribute :dynamic_attributes, :widgetlist
+
+  def valid_widget_classes_for(field_name)
+    [DynamicAttributeWidget]
+  end
 
   def self.activities
-    Obj.try(:crm_activity_filter) || Crm::Type.all.select {|i| i.item_base_type == "Activity"}
+    @activities ||= Obj.try(:crm_activity_filter) || Crm::Type.all.select {|i| i.item_base_type == "Activity"}
   end
 
   def attributes
@@ -29,6 +34,22 @@ class CrmFormWidget < Widget
   end
 
   def self.events
-    Obj.try(:crm_activity_filter) || Crm::Event.all.to_a
+    @events ||= Obj.try(:crm_activity_filter) || Crm::Event.all.to_a
+  end
+
+  def self.event_ids
+    CrmFormWidget.events.map {|e| e.id}
+  end
+
+  def self.event_names
+    name_hash = {}
+    CrmFormWidget.events.each do |e|
+      name_hash[e.id] = e.title
+    end
+    return name_hash
+  end
+
+  def self.activity_ids
+    CrmFormWidget.activities.map {|a| a.id}
   end
 end

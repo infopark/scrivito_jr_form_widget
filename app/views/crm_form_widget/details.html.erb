@@ -1,47 +1,51 @@
-<ul class="tab-list">
-  <li class="active" data-panel-target="#edit-general">General</li>
-  <li data-panel-target="#edit-tags">Tags</li>
-  <li data-panel-target="#edit-activity">Activity</li>
-  <li data-panel-target="#edit-event">Event</li>
-</ul>
+<%= scrivito_large_dialog do %>
+  <ul class="tab-list">
+    <li class="active" data-panel-target="#edit-general">General</li>
+    <li data-panel-target="#edit-tags">Tags</li>
+    <li data-panel-target="#edit-activity">Activity</li>
+    <li data-panel-target="#edit-event">Event</li>
+    <li data-panel-target="#edit-dynamic">Add fields</li>
+  </ul>
 
-<div class="tab-panels">
-  <div class="tab-panel" id="edit-general">
-    <%= scrivito_details_for 'Subject' do %>
-      <%= scrivito_tag :div, widget, :subject %>
-    <% end %>
-    <%= scrivito_details_for 'Redirect after submit' do %>
-      <%= scrivito_tag :div, widget, :redirect_to %>
-    <% end %>
-
-    <%= scrivito_details_for 'Text on submitbutton' do %>
-      <%= scrivito_tag :div, widget, :submit_button_text %>
-    <% end %>
-  </div>
-
-  <div class="tab-panel" id="edit-tags">
-    <%= scrivito_details_for 'Tags for Contact' do %>
-      <div class="alert alert-info">
-        optional attribute. can be used to add tags to a contact like has_visited_event. contatc will be calculated by the custom attributes email and last_name of your selected activtiy. If this fields do not exist, this field has no effect.
-      </div>
-      <%= scrivito_tag :div, widget, :tags, data: {editor: 'scrivito-list-editor'} %>
-    <% end %>
-  </div>
-
-  <div class="tab-panel" id="edit-activity">
-    <%= scrivito_details_for 'Activity' do %>
-      <%= scrivito_toggle_button_editor widget, :activity_id, CrmFormWidget.activities.map { |a| a.id } %>
-    <% end %>
-  </div>
-
-  <div class="tab-panel" id="edit-event">
-    <%= scrivito_details_for 'Event' do %>
-      <%- scrivito_toggle_button_editor(widget, :event_id, CrmFormWidget.events) do |event| %>
-        <%= scrivito_tag(:button, widget, :event_id, data: {editor: 'scrivito-toggle-button', content: event.id}) do %>
-          <%= event.title %>
-        <% end %>
+  <div class="tab-panels">
+    <div class="tab-panel" id="edit-general">
+      <%= scrivito_details_for 'Subject' do %>
+        <%= scrivito_tag :div, widget, :subject %>
       <% end %>
-    <% end %>
-  </div>
-</div>
+      <%= scrivito_details_for 'Redirect after submit' do %>
+        <%= scrivito_tag :div, widget, :redirect_to %>
+      <% end %>
 
+      <%= scrivito_details_for 'Text on submitbutton' do %>
+        <%= scrivito_tag :div, widget, :submit_button_text %>
+      <% end %>
+    </div>
+
+    <div class="tab-panel" id="edit-tags">
+      <%= scrivito_details_for 'Tags for Contact' do %>
+        <%= scrivito_tag :div, widget, :tags, data: {editor: 'scrivito-list-editor'} %>
+      <% end %>
+      <%= scrivito_colapsable_for 'What is this for?', 'help small mark' do %>
+        Optional attribute. Can be used to add tags to a contact like has_visited_event. Contatc will be calculated by the custom attributes email and last_name of your selected activtiy. If one of this fields at the crm activity do not exist, this attribute has no effect.
+      <% end %>
+    </div>
+
+    <div class="tab-panel" id="edit-activity">
+      <%= scrivito_details_for 'Activity' do %>
+        <%= scrivito_tag(:div, widget, :activity_id, data: {toggle_button_list: CrmFormWidget.activity_ids}) %>
+      <% end %>
+    </div>
+
+    <div class="tab-panel" id="edit-event">
+      <%= scrivito_details_for 'Event' do %>
+        <%= scrivito_tag(:div, widget, :event_id, data: {
+          toggle_button_list: CrmFormWidget.event_ids,
+          toggle_button_caption: CrmFormWidget.event_names }) %>
+      <% end %>
+    </div>
+
+    <div class="tab-panel" id="edit-dynamic">
+      <%= scrivito_tag :div, widget, :dynamic_attributes %>
+    </div>
+  </div>
+<% end %>

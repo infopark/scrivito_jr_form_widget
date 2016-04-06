@@ -16,16 +16,6 @@ Add this line to your JavaScript manifest:
 
     //= require scrivito_crm_form_widget
 
-Create a model named `JrFormAttribtues` for use by the presenter to make your custom attributes accessible to the form:
-
-```ruby
-class CrmFormAttributes
-  include ActiveModel::Model
-
-  attr_accessor :custom_attribute_1, :custom_attribute_2, ...
-end
-```
-
 ## Features
 
 If the selected activity type has the fields `email` and `last_name`, a CRM contact based on this data is searched for, and, if it doesn't exist, is created.
