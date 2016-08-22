@@ -1,26 +1,26 @@
-<%= scrivito_colapsable_for 'Attribute' do %>
+<%= scrivito_colapsable_for t('scrivito_crm_form_widget.details.dynamic_attribute', default: 'Attribute') do %>
   <%= scrivito_details_for do %>
-    <h4>Type</h4>
+    <h4><%= t('scrivito_crm_form_widget.details.type', default: 'Type') %></h4>
     <%= scrivito_tag :div, widget, :type %>
   <% end %>
 
   <%= scrivito_details_for do %>
-    <h4>Label</h4>
+    <h4><%= t('scrivito_crm_form_widget.details.label', default: 'Label') %></h4>
     <%= scrivito_tag :div, widget, :label %>
   <% end %>
 
   <%= scrivito_details_for do %>
-    <h4>Title</h4>
+    <h4><%= t('scrivito_crm_form_widget.details.title', default: 'Title') %></h4>
     <%= scrivito_tag :div, widget, :title %>
   <% end %>
 
   <%= scrivito_details_for do %>
-    <h4>Maxlength</h4>
+    <h4><%= t('scrivito_crm_form_widget.details.maxlength', default: 'Max Length') %></h4>
     <%= scrivito_tag :div, widget, :maxlength %>
   <% end %>
 
   <%= scrivito_details_for do %>
-    <h4>Values <small>Mandatory for type enum or multienum</small></h4>
+    <h4><%= t('scrivito_crm_form_widget.details.valid_values', default: 'Values') %></h4>
     <%= scrivito_tag :div, widget, :valid_values %>
   <% end %>
 <% end %>

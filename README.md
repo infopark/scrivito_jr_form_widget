@@ -24,20 +24,45 @@ The editor may also select an event on the details view of the widget. If the `e
 
 ## Localization
 
+The following code represents the default localization for English. Copy it to your `en.yml` and change it if necessary:
+
+```yaml
+en:
+  scrivito_crm_form_widget:
+    thumbnail:
+      title: CRM Form
+      description: Add a formular to your page based on an activty from Infopark CRM
+    details:
+      activity_id:  Activity
+      event_id: Event
+      subject: Subject
+      tags: Tags
+      redirect_to: Redirect after submit
+      submit_button_text: Text on Submit button
+      dynamic_attribute: Attribute
+      title: Title
+      label: Label
+      type: Type
+      valid_values: Values
+      maxlength: Max Length
+
+
+```
+
 You can loaclize your labels using i18n:
 
-```yml
+```yaml
 en:
   helpers:
     label:
       crm_form_presenter:
-        custom_attribute_1: 'Foo'
-        custom_attribute_2: 'Bar'
-        custom_enum_attribute: 'Enum'
+        custom_attribute_1: Foo
+        custom_attribute_2: Bar
+        custom_enum_attribute: Enum
         custom_enum_attribute_options:
-          one: 'One'
-          two: 'Two'
-          three: 'Three
+          one: One
+          two: Two
+          three: Three
 ```
 
 ## Customization
