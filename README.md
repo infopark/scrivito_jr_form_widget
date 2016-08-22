@@ -45,8 +45,6 @@ en:
       type: Type
       valid_values: Values
       maxlength: Max Length
-
-
 ```
 
 You can loaclize your labels using i18n:

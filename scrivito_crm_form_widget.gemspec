@@ -22,11 +22,9 @@ Gem::Specification.new do |s|
     "Rakefile"
   ]
 
-  s.add_dependency 'bundler'
   s.add_dependency 'scrivito'
   s.add_dependency 'scrivito_advanced_editors'
   s.add_dependency 'active_attr'
   s.add_dependency 'infopark_webcrm_sdk'
 
-  s.add_development_dependency 'rake'
 end
