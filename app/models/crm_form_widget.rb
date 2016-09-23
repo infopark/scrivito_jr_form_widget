@@ -8,6 +8,8 @@ class CrmFormWidget < Widget
   attribute :redirect_to, :reference
   attribute :submit_button_text, :string
   attribute :dynamic_attributes, :widgetlist
+  attribute :label_position, :enum, values: ['left','top'], default: 'left'
+  attribute :columns, :enum, values: ['one','two'], default: 'one'
 
   def valid_widget_classes_for(field_name)
     [DynamicAttributeWidget]
@@ -51,5 +53,9 @@ class CrmFormWidget < Widget
 
   def self.activity_ids
     CrmFormWidget.activities.map {|a| a.id}
+  end
+
+  def field_as_select?(options)
+    columns == 'two' || options['valid_values'].count > 5
   end
 end

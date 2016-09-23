@@ -19,6 +19,14 @@
       <%= scrivito_details_for t('scrivito_crm_form_widget.details.submit_button_text', default: 'Text on submit button') do %>
         <%= scrivito_tag :div, widget, :submit_button_text %>
       <% end %>
+
+      <%= scrivito_details_for t('scrivito_crm_form_widget.details.label_position', default: 'Label Position') do %>
+        <%= scrivito_tag :div, widget, :label_position %>
+      <% end %>
+
+      <%= scrivito_details_for t('scrivito_crm_form_widget.details.columns', default: 'Columns') do %>
+        <%= scrivito_tag :div, widget, :columns %>
+      <% end %>
     </div>
 
     <div class="tab-panel" id="edit-tags">

@@ -1,4 +1,4 @@
-<%= form_for CrmFormPresenter.new(widget, request, controller), url: scrivito_path(widget.obj), html: { class: "form-horizontal"} do |form| %>
+<%= form_for CrmFormPresenter.new(widget, request, controller), url: scrivito_path(widget.obj), html: { class: "form-horizontal clearfix label-position-#{widget.label_position} #{widget.columns}-column-layout"} do |form| %>
   <% if widget.subject %>
     <%= form.hidden_field(:title, value: widget.subject) %>
   <% end %>
@@ -7,12 +7,12 @@
 
   <% widget.attributes.each do |name, options| %>
     <% CrmFormPresenter.send(:attr_accessor, name.to_sym) %>
-    <%= render "crm_form_widget/crm_#{options["attribute_type"]}", form: form, name: name, options: options, label: nil %>
+    <%= render "crm_form_widget/crm_#{options["attribute_type"]}", form: form, name: name, options: options, label: nil, widget: widget %>
   <% end %>
 
   <% widget.dynamic_attributes.each do |attribute| %>
     <% CrmFormPresenter.send(:attr_accessor, attribute.field_name.to_sym) %>
-    <%= render "crm_form_widget/crm_#{attribute.type}", form: form, name: attribute.field_name, options: attribute.options || {}, label: attribute.label %>
+    <%= render "crm_form_widget/crm_#{attribute.type}", form: form, name: attribute.field_name, options: attribute.options || {}, label: attribute.label, widget: widget %>
   <% end %>
 
   <div class="form-group last">

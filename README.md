@@ -45,6 +45,8 @@ en:
       type: Type
       valid_values: Values
       maxlength: Max Length
+      label_position: Label Position
+      columns: Columns
 ```
 
 You can loaclize your labels using i18n:
