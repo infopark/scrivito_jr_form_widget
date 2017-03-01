@@ -10,8 +10,12 @@ class CrmFormPresenter
     @activity = widget.activity
     @page = widget.obj
     @params = request.params["crm_form_presenter"]
+    @dynamic_params = set_dynamic_params
+    errors = validate_params
 
-    if request.post? && widget.id == @params[:widget_id]
+    if errors.present?
+      return {status: "error", message: errors}
+    elsif request.post? && widget.id == @params[:widget_id]
       redirect_after_submit(controller, widget, self.submit)
     end
   end
@@ -32,8 +36,7 @@ class CrmFormPresenter
 
   private
   def prepare_activity_params
-    dynamic_params = set_dynamic_params
-    @params[:comment_notes] = dynamic_params if dynamic_params.present?
+    @params[:comment_notes] = @dynamic_params if @dynamic_params.present?
 
     @params.delete("widget_id")
     @params["title"] = @params[:title].empty? ? @activity.id : @params[:title]
@@ -117,5 +120,15 @@ class CrmFormPresenter
     elsif submit_message[:status] == "error"
       controller.redirect_to("/#{@page.id}", alert: submit_message[:message])
     end
+  end
+
+  def validate_params
+    email = validate_email(@params['custom_email'])
+    hook = Obj.respond_to?('crm_form_validation') ? Obj.crm_form_validation(@params) : false
+    email || hook
+  end
+
+  def validate_email(email)
+    email.present ? /.+@.+\..+/i.match(email).present? : false
   end
 end
