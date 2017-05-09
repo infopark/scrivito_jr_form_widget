@@ -46,7 +46,7 @@ class CrmFormPresenter
 
   def set_dynamic_params
     dynamic_params = {};
-    @params.each do |key, value|
+    (@params || []).each do |key, value|
       if key.starts_with? 'dynamic_'
         dynamic_params[key] = value
         @params.delete(key)
@@ -123,6 +123,7 @@ class CrmFormPresenter
   end
 
   def validate_params
+    return false if @params.nil?
     email = validate_email(@params['custom_email'])
     hook = Obj.respond_to?('crm_form_validation') ? Obj.crm_form_validation(@params) : false
     email || hook
