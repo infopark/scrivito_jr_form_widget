@@ -130,6 +130,6 @@ class CrmFormPresenter
   end
 
   def validate_email(email)
-    email.present ? /.+@.+\..+/i.match(email).present? : false
+    email.present? ? /.+@.+\..+/i.match(email).present? : false
   end
 end
