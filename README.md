@@ -47,6 +47,9 @@ en:
       maxlength: Max Length
       label_position: Label Position
       columns: Columns
+      file_upload: File upload
+    view:
+      file: File
 ```
 
 You can loaclize your labels using i18n:

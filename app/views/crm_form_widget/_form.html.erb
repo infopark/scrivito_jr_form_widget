@@ -15,12 +15,22 @@
     <%= render "crm_form_widget/crm_#{attribute.type}", form: form, name: attribute.field_name, options: attribute.options || {}, label: attribute.label, widget: widget %>
   <% end %>
 
+  <% if widget.file_upload? %>
+    <div class="form-group form-field-custom-file">
+      <% CrmFormPresenter.send(:attr_accessor, :custom_file) %>
+      <%= form.label :custom_file, t('scrivito_crm_form_widget.view.file', default: 'File'), class: "control-label col-sm-3" %>
+      <div class="col-sm-9">
+        <%= form.file_field :custom_file, class: "form-control" %>
+      </div>
+    </div>
+  <% end %>
+
   <div class="form-group last">
     <label class="control-label col-sm-3" for="crm_form_presenter_email">Email</label>
     <div class="col-sm-9">
       <input class="form-control" type="text" name="crm_form_presenter[email]" id="crm_form_presenter_email">
     </div>
   </div>
-  <%= form.submit widget.submit_button, class: "btn btn-primary pull-right" %>
 
+  <%= form.submit widget.submit_button, class: "btn btn-primary pull-right" %>
 <% end %>

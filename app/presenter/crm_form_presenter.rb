@@ -37,6 +37,11 @@ class CrmFormPresenter
   private
   def prepare_activity_params
     @params[:comment_notes] = @dynamic_params if @dynamic_params.present?
+    @params[:comment_attachments] = [@params[:custom_file]] if @params[:custom_file].present?
+
+    if @params[:custom_file].present?
+      @params.delete(:custom_file)
+    end
 
     @params.delete("widget_id")
     @params["title"] = @params[:title].empty? ? @activity.id : @params[:title]

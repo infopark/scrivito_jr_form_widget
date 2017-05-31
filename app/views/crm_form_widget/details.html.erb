@@ -27,6 +27,10 @@
       <%= scrivito_details_for t('scrivito_crm_form_widget.details.columns', default: 'Columns') do %>
         <%= scrivito_tag :div, widget, :columns %>
       <% end %>
+
+      <%= scrivito_details_for t('scrivito_crm_form_widget.details.file_upload', default: 'File upload') do %>
+        <%= scrivito_tag :div, widget, :file_upload %>
+      <% end %>
     </div>
 
     <div class="tab-panel" id="edit-tags">

@@ -11,6 +11,8 @@ class CrmFormWidget < Widget
   attribute :label_position, :enum, values: ['left','top'], default: 'left'
   attribute :columns, :enum, values: ['one','two'], default: 'one'
 
+  attribute :file_upload, :enum, values: ['Yes','No'], default: 'No'
+
   def valid_widget_classes_for(field_name)
     [DynamicAttributeWidget]
   end
@@ -57,5 +59,9 @@ class CrmFormWidget < Widget
 
   def field_as_select?(options)
     columns == 'two' || options['valid_values'].count > 5
+  end
+
+  def file_upload?
+    file_upload == 'Yes'
   end
 end
