@@ -129,12 +129,12 @@ class CrmFormPresenter
 
   def validate_params
     return false if @params.nil?
-    email = validate_email(@params['custom_email'])
+    email = valid_email?(@params['custom_email'])
     hook = Obj.respond_to?('crm_form_validation') ? Obj.crm_form_validation(@params) : false
-    email || hook
+    !email || hook
   end
 
-  def validate_email(email)
-    email.present? ? /.+@.+\..+/i.match(email).present? : false
+  def valid_email?(email)
+    /.+@.+\..+/i.match(email).present?
   end
 end
