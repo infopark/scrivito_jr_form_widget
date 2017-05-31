@@ -1,3 +1,3 @@
 module ScrivitoCrmFormWidget
-  VERSION = "0.8.0.beta3"
+  VERSION = "0.9.0.beta1"
 end
