@@ -72,37 +72,67 @@ en:
 
 A field label is given the `mandatory` class if the field is marked as mandatory in the activity type. You can style this using CSS, for example:
 
-    label.mandatory:after {
-      content: "*";
-    }
+```css
+label.mandatory:after {
+  content: "*";
+}
+```
 
 If the creation of a new activity fails, the `flash[:alert]` value is set. The message returned bythe CRM SDK is used as the flash message. It has the following format:
 
-    [
-     {
-       "attribute" => "gender",
-       "code" => "inclusion",
-       "message" => "gender is not included in the list: unknown, male, female"
-     },
-     {
-       "attribute" => "language",
-       "code" => "inclusion",
-       "message" => "language is not included in the list"
-     },
-     {
-       "attribute" => "last_name",
-       "code" => "blank",
-       "message" => "last_name can't be blank"
-     }
-    ]
+```ruby
+[
+  {
+    "attribute" => "gender",
+    "code" => "inclusion",
+    "message" => "gender is not included in the list: unknown, male, female"
+  },
+  {
+    "attribute" => "language",
+    "code" => "inclusion",
+    "message" => "language is not included in the list"
+  },
+  {
+    "attribute" => "last_name",
+    "code" => "blank",
+    "message" => "last_name can't be blank"
+  }
+]
+```
 
 You can use this to create a message for the user.
 
 If you are maintaining the activities of severeal websites with a single Infopark CRM, you can add the 'self.crm_activity_filter' method to your obj.rb file to filter the activity types by your selection criteria.
 
-    def self.crm_activity_filter
-      Crm::Type.all.select { |a| a.id.starts_with? 'page-' }
+```ruby
+def self.crm_activity_filter
+  Crm::Type.all.select { |a| a.id.starts_with? 'page-' }
+end
+```
+
+Using advance editors, you can define the selectable classes by adding a class method to your `obj.rb`:
+
+```ruby
+  class Obj < Scrivito::BasicObj
+    ...
+    def self.scrivito_selectable_style_classes(class_name='')
+      if class_name == 'CrmFormWidget'
+        ['special_style', ...]
+      else
+        ...
+      end
     end
+    ...
+  end
+```
+
+Than you have to define a css class for your selections:
+
+```css
+  form.special_style {
+    border: 1px solid red;
+  }
+```
 
 ### Attributes
 
