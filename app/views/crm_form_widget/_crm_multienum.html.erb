@@ -3,9 +3,9 @@
   <div class="col-sm-9">
     <% options['valid_values'].each do |value| %>
       <div class="checkbox">
-        <%= form.label "#{name}_#{value.downcase}" do %>
-          <%= form.check_box name.to_sym, {:multiple => true, id: "crm_form_presenter_#{name}_#{value.downcase}"}, value, nil %>
-          <%= t("helpers.label.crm_form_presenter.#{name}_option.#{value.downcase}", default: value) %>
+        <%= form.label "#{name}_#{value.parameterize}" do %>
+          <%= form.check_box name.to_sym, {:multiple => true, id: "crm_form_presenter_#{name}_#{value.parameterize}"}, value, nil %>
+          <%= t("helpers.label.crm_form_presenter.#{name}_option.#{value.parameterize}", default: value) %>
         <% end %>
       </div>
     <% end %>

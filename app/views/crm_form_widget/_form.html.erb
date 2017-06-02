@@ -1,4 +1,4 @@
-<%= form_for CrmFormPresenter.new(widget, request, controller), url: scrivito_path(widget.obj), html: { class: "form-horizontal clearfix label-position-#{widget.label_position} #{widget.columns}-column-layout"} do |form| %>
+<%= form_for CrmFormPresenter.new(widget, request, controller), url: scrivito_path(widget.obj), html: { class: "form-horizontal clearfix label-position-#{widget.label_position} #{widget.columns}-column-layout #{widget.activity.id.parameterize}"} do |form| %>
   <% if widget.subject %>
     <%= form.hidden_field(:title, value: widget.subject) %>
   <% end %>
@@ -18,7 +18,7 @@
   <% if widget.file_upload? %>
     <div class="form-group form-field-custom-file">
       <% CrmFormPresenter.send(:attr_accessor, :custom_file) %>
-      <%= form.label :custom_file, t('scrivito_crm_form_widget.view.file', default: 'File'), class: "control-label col-sm-3" %>
+      <%= form.label :custom_file, t('scrivito_crm_form_widget.view.file', default: 'File upload'), class: "control-label col-sm-3" %>
       <div class="col-sm-9">
         <%= form.file_field :custom_file, class: "form-control" %>
       </div>

@@ -49,7 +49,7 @@ en:
       columns: Columns
       file_upload: File upload
     view:
-      file: File
+      file: File upload
 ```
 
 You can loaclize your labels using i18n:
