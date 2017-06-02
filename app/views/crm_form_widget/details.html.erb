@@ -31,6 +31,10 @@
       <%= scrivito_details_for t('scrivito_crm_form_widget.details.file_upload', default: 'File upload') do %>
         <%= scrivito_tag :div, widget, :file_upload %>
       <% end %>
+
+      <%= scrivito_details_for t('scrivito_crm_form_widget.details.file_upload', default: 'File upload') do %>
+        <%= scrivito_tag :div, widget, :styles, data: { multi_select_list: widget.scrivito_selectable_style_classes } %>
+      <% end %>
     </div>
 
     <div class="tab-panel" id="edit-tags">

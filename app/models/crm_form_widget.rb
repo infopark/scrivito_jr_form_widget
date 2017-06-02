@@ -12,6 +12,15 @@ class CrmFormWidget < Widget
   attribute :columns, :enum, values: ['one','two'], default: 'one'
 
   attribute :file_upload, :enum, values: ['Yes','No'], default: 'No'
+  attribute :styles, :stringlist
+
+  def scrivito_selectable_style_classes
+    if Obj.respond_to? 'scrivito_selectable_style_classes'
+      Obj.scrivito_selectable_style_classes('CrmFormWidget')
+    else
+      []
+    end
+  end
 
   def valid_widget_classes_for(field_name)
     [DynamicAttributeWidget]

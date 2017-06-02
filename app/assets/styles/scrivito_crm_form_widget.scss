@@ -22,9 +22,13 @@ form.form-horizontal.two-column-layout {
     margin: 0;
   }
 
-  .btn {
+  .form-submit-button-container {
     clear: both;
+  }
+
+  .btn {
     margin-right: 15px;
+    margin-top: 15px;
   }
 }
 
