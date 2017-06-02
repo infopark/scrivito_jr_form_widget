@@ -68,6 +68,22 @@ en:
           three: Three
 ```
 
+You can also set locals for a placeholder. This is only available for Text and Textarea fields:
+
+```yaml
+en:
+  helpers:
+    placeholder:
+      crm_form_presenter:
+        custom_attribute_1: Foo
+        custom_attribute_2: Bar
+        custom_enum_attribute: Enum
+        custom_enum_attribute_options:
+          one: One
+          two: Two
+          three: Three
+```
+
 ## Customization
 
 A field label is given the `mandatory` class if the field is marked as mandatory in the activity type. You can style this using CSS, for example:

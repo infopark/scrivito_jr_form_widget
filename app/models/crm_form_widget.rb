@@ -73,4 +73,9 @@ class CrmFormWidget < Widget
   def file_upload?
     file_upload == 'Yes'
   end
+
+  def placeholder(field)
+    local = "helpers.placeholder.crm_form_presenter.#{field}"
+    I18n.exists?(local) ? I18n.t(local) : nil
+  end
 end
