@@ -5,26 +5,6 @@
 
   <%= form.hidden_field(:widget_id, value: widget.id) %>
 
-  <% widget.attributes.each do |name, options| %>
-    <% CrmFormPresenter.send(:attr_accessor, name.to_sym) %>
-    <%= render "crm_form_widget/crm_#{options["attribute_type"]}", form: form, name: name, options: options, label: nil, widget: widget %>
-  <% end %>
-
-  <% widget.dynamic_attributes.each do |attribute| %>
-    <% CrmFormPresenter.send(:attr_accessor, attribute.field_name.to_sym) %>
-    <%= render "crm_form_widget/crm_#{attribute.type}", form: form, name: attribute.field_name, options: attribute.options || {}, label: attribute.label, widget: widget %>
-  <% end %>
-
-  <% if widget.file_upload? %>
-    <div class="form-group form-field-custom-file">
-      <% CrmFormPresenter.send(:attr_accessor, :custom_file) %>
-      <%= form.label :custom_file, t('scrivito_crm_form_widget.view.file', default: 'File upload'), class: "control-label col-sm-3" %>
-      <div class="col-sm-9">
-        <%= form.file_field :custom_file, class: "form-control" %>
-      </div>
-    </div>
-  <% end %>
-
   <div class="form-group last">
     <label class="control-label col-sm-3" for="crm_form_presenter_email">Email</label>
     <div class="col-sm-9">
@@ -32,7 +12,45 @@
     </div>
   </div>
 
-  <div class="form-submit-button-container clearfix">
-    <%= form.submit widget.submit_button, class: "btn btn-primary pull-right" %>
-  </div>
+  <% if widget.multilevel? %>
+    <div class="crm-form-widget-multilevel">
+      <% widget.levels.each do |level| %>
+        <fieldset>
+          <%= scrivito_tag :legend, level, :headline %>
+          <%= render 'crm_form_widget/attributes', widget: widget, form: form, attributes: level.attributes %>
+        </fieldset>
+
+        <% if widget.dynamic_attributes.any? %>
+          <fieldset>
+            <%= scrivito_tag :legend, widget, :multilevel_dynamic %>
+            <%= render 'crm_form_widget/dynamic_attributes', widget: widget, form: form %>
+          </fieldset>
+        <% end %>
+
+        <% if widget.file_upload? %>
+          <fieldset>
+            <%= scrivito_tag :legend, widget, :multilevel_file %>
+            <%= render 'crm_form_widget/file_upload', widget: widget, form: form %>
+          </fieldset>
+        <% end %>
+      <% end %>
+
+      <fieldset>
+        <%= scrivito_tag :legend, widget, :multilevel_send %>
+        <div class="form-submit-button-container clearfix">
+          <%= form.submit widget.submit_button, class: "btn btn-primary pull-right" %>
+        </div>
+      </fieldset>
+    </div>
+  <% else %>
+    <%= render 'crm_form_widget/attributes', widget: widget, form: form, attributes: widget.attributes %>
+    <%= render 'crm_form_widget/dynamic_attributes', widget: widget, form: form %>
+    <% if widget.file_upload? %>
+      <%= render 'crm_form_widget/file_upload', widget: widget, form: form %>
+    <% end %>
+
+    <div class="form-submit-button-container clearfix">
+      <%= form.submit widget.submit_button, class: "btn btn-primary pull-right" %>
+    </div>
+  <% end %>
 <% end %>

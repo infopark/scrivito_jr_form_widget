@@ -1,5 +1,4 @@
-<% attributes.each do |attribute| %>
-  <% name, type = attribute.split(':') %>
-  <%= name %>
-  <%= type %>
+<% widget.dynamic_attributes.each do |attribute| %>
+  <% CrmFormPresenter.send(:attr_accessor, attribute.field_name.to_sym) %>
+  <%= render "crm_form_widget/crm_#{attribute.type}", form: form, name: attribute.field_name, options: attribute.options || {}, label: attribute.label, widget: widget %>
 <% end %>

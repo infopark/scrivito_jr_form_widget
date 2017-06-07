@@ -1,10 +1,14 @@
 <%= scrivito_large_dialog do %>
   <ul class="tab-list">
     <li class="active" data-panel-target="#edit-general">General</li>
+    <li data-panel-target="#edit-options">Options</li>
     <li data-panel-target="#edit-tags">Tags</li>
     <li data-panel-target="#edit-activity">Activity</li>
     <li data-panel-target="#edit-event">Event</li>
-    <li data-panel-target="#edit-dynamic">Add fields</li>
+    <li data-panel-target="#edit-dynamic">Dynamic fields</li>
+    <% if widget.multilevel? %>
+      <li data-panel-target="#edit-multilevel">Levels</li>
+    <% end %>
   </ul>
 
   <div class="tab-panels">
@@ -12,6 +16,7 @@
       <%= scrivito_details_for t('scrivito_crm_form_widget.details.subject', default: 'Subject') do %>
         <%= scrivito_tag :div, widget, :subject %>
       <% end %>
+
       <%= scrivito_details_for t('scrivito_crm_form_widget.details.redirect_to', default: 'Redirect after submit') do %>
         <%= scrivito_tag :div, widget, :redirect_to %>
       <% end %>
@@ -20,6 +25,16 @@
         <%= scrivito_tag :div, widget, :submit_button_text %>
       <% end %>
 
+      <%= scrivito_details_for t('scrivito_crm_form_widget.details.file_upload', default: 'File upload') do %>
+        <%= scrivito_tag :div, widget, :file_upload %>
+      <% end %>
+
+      <%= scrivito_details_for t('scrivito_crm_form_widget.details.styles', default: 'Styles') do %>
+        <%= scrivito_tag :div, widget, :styles, data: { multi_select_list: widget.scrivito_selectable_style_classes } %>
+      <% end %>
+    </div>
+
+    <div class="tab-panel" id="edit-options">
       <%= scrivito_details_for t('scrivito_crm_form_widget.details.label_position', default: 'Label Position') do %>
         <%= scrivito_tag :div, widget, :label_position %>
       <% end %>
@@ -28,12 +43,22 @@
         <%= scrivito_tag :div, widget, :columns %>
       <% end %>
 
-      <%= scrivito_details_for t('scrivito_crm_form_widget.details.file_upload', default: 'File upload') do %>
-        <%= scrivito_tag :div, widget, :file_upload %>
+      <%= scrivito_details_for t('scrivito_crm_form_widget.details.multilevel', default: 'Is a multilevel form') do %>
+        <%= scrivito_tag :div, widget, :multilevel, data: { scrivito_editors_reload: true } %>
       <% end %>
 
-      <%= scrivito_details_for t('scrivito_crm_form_widget.details.file_upload', default: 'File upload') do %>
-        <%= scrivito_tag :div, widget, :styles, data: { multi_select_list: widget.scrivito_selectable_style_classes } %>
+      <% if widget.multilevel? %>
+        <%= scrivito_details_for t('scrivito_crm_form_widget.details.multilevel_dynamic', default: 'Dynamic headline') do %>
+          <%= scrivito_tag :div, widget, :multilevel_dynamic %>
+        <% end %>
+
+        <%= scrivito_details_for t('scrivito_crm_form_widget.details.multilevel_file', default: 'File updload headline') do %>
+          <%= scrivito_tag :div, widget, :multilevel_file %>
+        <% end %>
+
+        <%= scrivito_details_for t('scrivito_crm_form_widget.details.multilevel_send', default: 'Send Headline') do %>
+          <%= scrivito_tag :div, widget, :multilevel_send %>
+        <% end %>
       <% end %>
     </div>
 
@@ -63,5 +88,11 @@
     <div class="tab-panel" id="edit-dynamic">
       <%= scrivito_tag :div, widget, :dynamic_attributes %>
     </div>
+
+    <% if widget.multilevel? %>
+      <div class="tab-panel" id="edit-multilevel">
+        <%= scrivito_tag :div, widget, :levels %>
+      </div>
+    <% end %>
   </div>
 <% end %>

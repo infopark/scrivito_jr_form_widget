@@ -48,6 +48,9 @@ en:
       label_position: Label Position
       columns: Columns
       file_upload: File upload
+      styles: Styles
+      multilevel: Is a multilevel form
+      attributes: Attribuets for this level
     view:
       file: File upload
 ```

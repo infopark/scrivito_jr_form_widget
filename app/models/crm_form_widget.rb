@@ -11,6 +11,12 @@ class CrmFormWidget < Widget
   attribute :label_position, :enum, values: ['left','top'], default: 'left'
   attribute :columns, :enum, values: ['one','two'], default: 'one'
 
+  attribute :multilevel, :enum, values: ['Yes','No'], default: 'No'
+  attribute :levels, :widgetlist
+  attribute :multilevel_dynamic, :string, default: 'More attributes'
+  attribute :multilevel_file, :string, default: 'File upload'
+  attribute :multilevel_send, :string, default: 'Send'
+
   attribute :file_upload, :enum, values: ['Yes','No'], default: 'No'
   attribute :styles, :stringlist
 
@@ -23,7 +29,7 @@ class CrmFormWidget < Widget
   end
 
   def valid_widget_classes_for(field_name)
-    [DynamicAttributeWidget]
+    [field_name == 'levels' ? CrmFormLevelWidget : DynamicAttributeWidget]
   end
 
   def self.activities
@@ -40,6 +46,10 @@ class CrmFormWidget < Widget
 
   def activity_id?
     self.activity_id != ""
+  end
+
+  def multilevel?
+    multilevel == 'Yes'
   end
 
   def submit_button
@@ -67,7 +77,7 @@ class CrmFormWidget < Widget
   end
 
   def field_as_select?(options)
-    columns == 'two' || options['valid_values'].count > 5
+    columns == 'two' || options['valid_values'].count > 4
   end
 
   def file_upload?
