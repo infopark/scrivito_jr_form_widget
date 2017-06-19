@@ -6,7 +6,7 @@
     <li data-panel-target="#edit-activity">Activity</li>
     <li data-panel-target="#edit-event">Event</li>
     <li data-panel-target="#edit-dynamic">Dynamic fields</li>
-    <% if widget.multilevel? %>
+    <% if widget.multilevel? && widget.activity_id.present? %>
       <li data-panel-target="#edit-multilevel">Levels</li>
     <% end %>
   </ul>
@@ -73,7 +73,7 @@
 
     <div class="tab-panel" id="edit-activity">
       <%= scrivito_details_for t('scrivito_crm_form_widget.details.activity', default: 'Activity') do %>
-        <%= scrivito_tag(:div, widget, :activity_id, data: {toggle_button_list: CrmFormWidget.activity_ids}) %>
+        <%= scrivito_tag(:div, widget, :activity_id, data: {toggle_button_list: CrmFormWidget.activity_ids, scrivito_editors_reload: true }) %>
       <% end %>
     </div>
 
@@ -89,7 +89,7 @@
       <%= scrivito_tag :div, widget, :dynamic_attributes %>
     </div>
 
-    <% if widget.multilevel? %>
+    <% if widget.multilevel? && widget.activity_id.present? %>
       <div class="tab-panel" id="edit-multilevel">
         <%= scrivito_tag :div, widget, :levels %>
       </div>

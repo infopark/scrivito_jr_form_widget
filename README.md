@@ -174,3 +174,125 @@ On the details view a redirection target, which becomes effective after submitti
 #### Text on submission button
 
 The text to display on the submission button. The default is `send`.
+
+## Advanced Stuff
+
+### Creating a survey
+
+You can use the CRM Form Widget gem for a poll with different steps. For this activate the `multilevel` function in the details view and add the functionality to your app:
+
+First add a style class to your forms to use for differntiating:
+
+```ruby
+# in obj.rb
+def self.scrivito_selectable_style_classes(class_name='')
+  if class_name == ""
+    ['survey_form', ...]
+  else
+    ...
+  end
+end
+```
+
+Create a javascript with you code for the click handler:
+
+```javascript
+(function($, app) {
+  'use strict';
+
+  scrivito.on('content', function(content) {
+    var form = $('.survey_form');
+    var fieldsets = form.find('fieldset');
+    var prev = $('<div class="prev btn btn-lg bg-gray pull-left"><i class="fa fa-chevron-left"></i></div>')
+    var next = $('<div class="next btn btn-lg bg-blue pull-right">Weiter</div>')
+    var max_height = fieldsets.sort(function(a,b) { return $(b).height() - $(a).height() }).first().height();
+
+    form.append(prev);
+    form.append(next);
+    form.find('fieldset').first().addClass('active');
+    fieldsets.css('height', max_height + 'px');
+
+    form.on('click', '.next', function() {
+      var active = form.find('.active');
+      var next_slide = active.next('fieldset');
+      if(next_slide.length > 0) {
+        next_slide.addClass('active');
+        active.removeClass('active');
+      }
+    });
+
+    form.on('click', '.prev', function() {
+      var active = form.find('.active');
+      var next_slide = active.prev('fieldset');
+      if(next_slide.length > 0) {
+        next_slide.addClass('active');
+        active.removeClass('active');
+      }
+    });
+  });
+})(jQuery, this);
+```
+
+Some Css to hide all fieldsets and some basic styling:
+
+```css
+.survey_form {
+  .crm-form-widget-multilevel fieldset {
+    display: none;
+    &.active {
+      display: block;
+    }
+  }
+
+  .prev {
+    cursor: pointer;
+  }
+
+  .next {
+    width: 200px;
+    max-width: 100%;
+    cursor: pointer;
+  }
+
+  .form-submit-button-container .btn {
+    float: none !important;
+    display: block;
+    margin: 0 auto;
+    min-width: 200px;
+  }
+}
+```
+
+### Adding a protection to a page
+
+The form generates a random string to create an access code that can be used to check if a request on a page is initiated by a send form.
+
+To check this you can access the `session['access_via_form']` with `params['access_via_form']` in your controller.
+
+```ruby
+#in page_controller.rb
+class PageController < Obj
+  def index
+    if !scrivito_in_editable_view? && !page_is_accessable?
+      raise Scrivito::ResourceNotFound.new('Not Found')
+    end
+  end
+
+  def page_is_accessable?
+    !@obj.direct_access_is_protected? || (@obj.direct_access_is_protected? && form_was_filled?)
+  end
+
+  def form_was_filled?
+    session['access_via_form'].present? && (session['access_via_form'] == params['access_via_form'])
+  end
+end
+
+# in obj.rb
+class Obj < Scrivito::BasicObj
+  ...
+  def direct_access_is_protected?
+    # when should the protection be used
+  end
+  ...
+end
+```

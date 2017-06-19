@@ -11,11 +11,13 @@ class CrmFormPresenter
     @page = widget.obj
     @params = request.params["crm_form_presenter"]
     @dynamic_params = set_dynamic_params
+    @access_code = generate_random_string(12)
     errors = validate_params
 
     if errors.present?
       return {status: "error", message: errors}
     elsif request.post? && widget.id == @params[:widget_id]
+      request.session['access_via_form'] = @access_code
       redirect_after_submit(controller, widget, self.submit)
     end
   end
@@ -26,6 +28,8 @@ class CrmFormPresenter
     else
       @params.delete('email')
     end
+    @params.delete('access_via_form')
+
     prepare_contact(@params['custom_email'], @params['custom_last_name'])
     prepare_activity_params
     Crm::Activity.create(@params)
@@ -112,7 +116,7 @@ class CrmFormPresenter
 
   def redirect_path(page, widget)
     obj = redirect_obj(page, widget)
-    obj.binary? ? obj.try(:binary_url) : "/#{obj.id}"
+    obj.binary? ? obj.try(:binary_url) : "/#{obj.id}?access_via_form=#{@access_code}"
   end
 
   def redirect_obj(page, widget)
@@ -136,5 +140,9 @@ class CrmFormPresenter
 
   def valid_email?(email)
     /.+@.+\..+/i.match(email).present?
+  end
+
+  def generate_random_string(length = 8)
+    [*('a'..'z'),*('0'..'9')].shuffle[0,length].join
   end
 end
