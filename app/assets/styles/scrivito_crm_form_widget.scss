@@ -14,20 +14,22 @@ form.form-horizontal.label-position-top {
   }
 }
 
-form.form-horizontal.two-column-layout {
-  margin: 0 -15px;
-  .form-group {
-    width: 50%;
-    float: left;
-    margin: 0;
-  }
+@media(min-width: 991px) {
+  form.form-horizontal.two-column-layout {
+    margin: 0 -15px;
+    .form-group {
+      width: 50%;
+      float: left;
+      margin: 0;
+    }
 
-  .form-submit-button-container {
-    clear: both;
-  }
+    .form-submit-button-container {
+      clear: both;
+    }
 
-  .btn {
-    margin-right: 15px;
-    margin-top: 15px;
+    .btn {
+      margin-right: 15px;
+      margin-top: 15px;
+    }
   }
 }
