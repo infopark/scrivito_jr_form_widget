@@ -2,12 +2,12 @@
   <%= form.label name.to_sym, label, class: "control-label col-sm-3 #{options[:mandatory] ? 'mandatory' : ''}" %>
   <div class="col-sm-9">
     <% if widget.field_as_select?(options) %>
-      <%= form.select(name.to_sym, options_for_select(options['valid_values'].map { |u| [t("helpers.label.crm_form_presenter.#{name}_option.#{u.parameterize}"), u] }), {}, class: 'form-control') %>
+      <%= form.select(name.to_sym, options_for_select(options['valid_values'].map { |u| [t("helpers.label.crm_form_presenter.#{name}_option.#{u.parameterize}"), u] }), {}, class: 'form-control', required: options[:mandatory] ) %>
     <% else %>
       <% options['valid_values'].each do |value| %>
         <div class="radio">
           <%= form.label "#{name}_#{value.parameterize}" do %>
-            <%= form.radio_button name.to_sym, value %>
+            <%= form.radio_button name.to_sym, value, required: options[:mandatory]  %>
             <%= t("helpers.label.crm_form_presenter.#{name}_option.#{value.parameterize}") %>
           <% end %>
         </div>

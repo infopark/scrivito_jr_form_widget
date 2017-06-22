@@ -1,6 +1,6 @@
 <div class="form-group form-field-<%= name %>">
   <%= form.label name.to_sym, label, class: "control-label col-sm-3 #{options[:mandatory] ? 'mandatory' : ''}" %>
   <div class="col-sm-9">
-    <%= form.text_field name.to_sym, class: "form-control", maxlength: options[:maxlength], placeholder: widget.placeholder(name.parameterize) %>
+    <%= form.text_field name.to_sym, class: "form-control", maxlength: options[:maxlength], placeholder: widget.placeholder(name.parameterize), required: options[:mandatory]  %>
   </div>
 </div>

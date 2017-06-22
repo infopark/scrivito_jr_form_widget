@@ -4,7 +4,7 @@
     <% options['valid_values'].each do |value| %>
       <div class="checkbox">
         <%= form.label "#{name}_#{value.parameterize}" do %>
-          <%= form.check_box name.to_sym, {:multiple => true, id: "crm_form_presenter_#{name}_#{value.parameterize}"}, value, nil %>
+          <%= form.check_box name.to_sym, {:multiple => true, id: "crm_form_presenter_#{name}_#{value.parameterize}", required: options[:mandatory] }, value, nil %>
           <%= t("helpers.label.crm_form_presenter.#{name}_option.#{value.parameterize}", default: value) %>
         <% end %>
       </div>
