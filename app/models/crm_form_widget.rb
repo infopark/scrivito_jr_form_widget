@@ -88,4 +88,9 @@ class CrmFormWidget < Widget
     local = "helpers.placeholder.crm_form_presenter.#{field}"
     I18n.exists?(local) ? I18n.t(local) : nil
   end
+
+  def hidden?(name, options, request)
+    param_given = !options[:visible_in_form] && request.params[name.sub(/^custom_/,'')].present?
+    param_given || ScrivitoCrmFormWidget.configuration.hidden_attributes.include?(name.sub(/^custom_/,''))
+  end
 end
