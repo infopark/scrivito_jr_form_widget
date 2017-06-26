@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    scrivito_crm_form_widget (1.0.0.beta3)
+    scrivito_crm_form_widget (1.0.0.beta4)
       active_attr
       infopark_webcrm_sdk
       scrivito

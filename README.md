@@ -50,7 +50,7 @@ en:
       file_upload: File upload
       styles: Styles
       multilevel: Is a multilevel form
-      attributes: Attribuets for this level
+      attributes: Attributes for this level
     view:
       file: File upload
 ```
@@ -152,6 +152,20 @@ Than you have to define a css class for your selections:
     border: 1px solid red;
   }
 ```
+
+#### Configuration
+
+Create an initializer and add the following to it:
+
+```ruby
+# in your initializer
+
+ScrivitoCrmFormWidget.configure do |config|
+  config.hidden_attributes = ['origin','referrer','tracking','service']
+end
+```
+
+`hidden_attributes` contains all your crm attributes that will be rendered as hidden fields. They will be filled with a parameter in your url. Be aware that you do not add the `custom_` to the values. To save your attribute in an activity, add it to the type configuration. In a link to the page with the form, add the parameter, e.g. `https://your_page.com/page_with_form?origin=facebook`.
 
 ### Attributes
 
