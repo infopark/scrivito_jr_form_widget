@@ -2,6 +2,7 @@
   <%= render 'crm_form_widget/form', widget: widget %>
 <% else %>
   <div class="alert alert-warning">
-    Select an activty in the details view.
+    <p><strong>Select an activty</strong></p>
+    <%= scrivito_tag(:div, widget, :activity_id, data: {toggle_button_list: CrmFormWidget.activity_ids, scrivito_editors_reload: true }) %>
   </div>
 <% end %>
