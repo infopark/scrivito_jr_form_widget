@@ -37,11 +37,19 @@ class CrmFormWidget < Widget
   end
 
   def attributes
-    activity.attribute_definitions
+    @attributes ||= activity.attribute_definitions
   end
 
   def activity
-    Crm::Type.find(activity_id)
+    @activity ||= Crm::Type.find(activity_id)
+  end
+
+  def validate(params)
+    errors = []
+    attributes.each do |name, options|
+      erros << {attribute: name, message: "Attribute #{name} can not be blank.", code: 'blank'} if options[:mandatory] && params[name]
+    end
+    errors
   end
 
   def activity_id?
