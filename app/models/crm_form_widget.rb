@@ -47,7 +47,7 @@ class CrmFormWidget < Widget
   def validate(params)
     errors = []
     attributes.each do |name, options|
-      erros << {attribute: name, message: "Attribute #{name} can not be blank.", code: 'blank'} if options[:mandatory] && params[name]
+      errors << {attribute: name, message: "Attribute #{name} can not be blank.", code: 'blank'} if options[:mandatory] && !params[name].present?
     end
     errors
   end
