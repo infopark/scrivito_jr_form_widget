@@ -155,7 +155,7 @@ Than you have to define a css class for your selections:
 
 #### Configuration
 
-Create an initializer and add the following to it:
+Create an initializer and add the following:
 
 ```ruby
 # in your initializer
@@ -165,7 +165,7 @@ ScrivitoCrmFormWidget.configure do |config|
 end
 ```
 
-`hidden_attributes` contains all your crm attributes that will be rendered as hidden fields. They will be filled with a parameter in your url. Be aware that you do not add the `custom_` to the values. To save your attribute in an activity, add it to the type configuration. In a link to the page with the form, add the parameter, e.g. `https://your_page.com/page_with_form?origin=facebook`.
+`hidden_attributes` contains all your crm attributes that will be rendered as hidden fields. They will be filled with a parameter in your url. Be aware that you do not add `custom_` to the values. To save your attribute in an activity, add it to the type configuration. In a link to the page with the form, add the parameter, e.g. `https://your_page.com/page_with_form?origin=facebook`.
 
 ### Attributes
 
@@ -179,7 +179,7 @@ This is used as the title of a created activity.
 
 #### Tags
 
-If the activity type has the fields named `email` and `last_name`, a CRM contact based on this data is searched for, and, if it doesn't exist, is created. If tags have been specified, they are added to the contact.
+If the activity type has the fields `email` and `last_name`, a CRM contact based on this data is searched for, if it doesn't exist, it is created. If tags have been specified they are added to the contact.
 
 #### Redirect after submission
 
@@ -193,14 +193,14 @@ The text to display on the submission button. The default is `send`.
 
 ### Creating a survey
 
-You can use the CRM Form Widget gem for a poll with different steps. For this activate the `multilevel` function in the details view and add the functionality to your app:
+You can use the CRM Form Widget gem for a poll with different steps. For this, activate the `multilevel` function in the details view and add the functionality to your app:
 
 First add a style class to your forms to use for differntiating:
 
 ```ruby
 # in obj.rb
 def self.scrivito_selectable_style_classes(class_name='')
-  if class_name == ""
+  if class_name == "CrmFormWidget"
     ['survey_form', ...]
   else
     ...
@@ -208,7 +208,7 @@ def self.scrivito_selectable_style_classes(class_name='')
 end
 ```
 
-Create a javascript with you code for the click handler:
+Create your JavaScript code for the click handler:
 
 ```javascript
 (function($, app) {
@@ -247,7 +247,7 @@ Create a javascript with you code for the click handler:
 })(jQuery, this);
 ```
 
-Some Css to hide all fieldsets and some basic styling:
+Add some Css to hide all field sets and basic styling:
 
 ```css
 .survey_form {
@@ -279,9 +279,9 @@ Some Css to hide all fieldsets and some basic styling:
 
 ### Adding a protection to a page
 
-The form generates a random string to create an access code that can be used to check if a request on a page is initiated by a send form.
+The form generates a random string to create an access code that can be used to check if a request on a page is initiated by a sent form.
 
-To check this you can access the `session['access_via_form']` with `params['access_via_form']` in your controller.
+To check this you can compare the `session['access_via_form']` with `params['access_via_form']` in your controller.
 
 ```ruby
 #in page_controller.rb

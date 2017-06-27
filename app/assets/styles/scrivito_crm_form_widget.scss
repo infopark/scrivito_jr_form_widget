@@ -1,3 +1,6 @@
+//= require scrivito_advanced_editors
+//= require_self
+
 form .form-group.last {
   display: none;
 }
@@ -19,7 +22,8 @@ form.form-horizontal.label-position-top {
     .form-group {
       width: 50%;
       float: left;
-      margin: 0;
+      margin-left: 0;
+      margin-right: 0;
     }
 
     .form-submit-button-container {
@@ -28,7 +32,7 @@ form.form-horizontal.label-position-top {
 
     .btn {
       margin-right: 15px;
-      margin-top: 15px;
+      margin-top: 0;
     }
   }
 }
