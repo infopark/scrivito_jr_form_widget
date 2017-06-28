@@ -2,7 +2,7 @@
   <ul>
     <% flash['alert']['message'].each do |msg| %>
       <li>
-        <%= t("helpers.error.crm_form_presenter.#{msg['code']}",
+        <%= t("helpers.messages.crm_form_presenter.#{msg['code']}",
           field: t("helpers.label.crm_form_presenter.#{msg['attribute']}", default: msg['attribute']),
           default: msg['message']).html_safe
         %>

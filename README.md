@@ -105,23 +105,28 @@ def self.crm_form_validation_hook(params, widget)
 end
 ```
 
-The `validation` hook checks if the inserted data of a form send is correct. It returns an array of the errors defined by a hash.
-
 The `before_send` hook is called before storing the data in the crm. So if the validation fails, this method is not called.
 This hook can be used to add third party tools like a shipping service or a tracking services.
+
+
+The `validation` hook checks if the inserted data of a form send is correct. It returns an array of the errors defined by a hash.
+
+The `code` of the error message hash is used by the internal message system and can be defined in your localizer. E.g. a check of a customer id that should have a specific layout can result in `customer_id: 'The customer_id is not in a valid form. It should start with <strong>xyz-</strong>.'`.
 
 #### Localizing the validation messages
 
 ```yml
 en:
   helpers:
-    message:
+    messages:
       crm_form_presenter:
         invalid: 'The field <strong>%{field}</strong> is invalid.'
         blank: 'The field <strong>%{field}</strong> should not be empty.'
         inclusion: 'The field <strong>%{field}</strong> is set to an incorrect value.'
-        email: 'The given email is in incorrect format. It should have the form <i>aa@bb.cc</i>'
+        email: 'The given email has an incorrect format. It should have the form <strong>aa@bb.cc</strong>'
         success: 'The form was send successfully.'
+        your_code: 'This is your error description.'
+        your_code2: 'Specify a specific error in a specific way.'
 ```
 
 The field variable is passed to the localzier and containes the attribute name locale or its name in the crm if not set.
