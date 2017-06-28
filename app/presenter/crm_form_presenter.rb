@@ -31,6 +31,9 @@ class CrmFormPresenter
 
     prepare_contact(@params['custom_email'], @params['custom_last_name'])
     prepare_activity_params
+
+    Obj.crm_form_before_send_hook(@params, @activity) if Obj.respond_to?('before_send_hook')
+
     Crm::Activity.create(@params)
     return {status: "success", message: "Your form was send successfully"}
   rescue Crm::Errors::InvalidValues => e
