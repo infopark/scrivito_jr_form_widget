@@ -2,6 +2,11 @@
   <% if(flash[:alert] && ScrivitoCrmFormWidget.configuration.show_error_message && (flash[:alert]['widget_id'] == widget.id)) %>
     <%= render 'crm_form_widget/error_messages' %>
   <% end %>
+  <% if flash[:notice] && ScrivitoCrmFormWidget.configuration.show_error_message %>
+    <div class="alert-success crm-form-message alert">
+      <%= t('helpers.messages.crm_form_presenter.success', default: 'Thank you for your message.').html_safe %>
+    </div>
+  <% end %>
   <%= render 'crm_form_widget/form', widget: widget %>
 <% else %>
   <div class="alert alert-warning">

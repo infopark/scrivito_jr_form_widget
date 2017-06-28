@@ -115,17 +115,20 @@ This hook can be used to add third party tools like a shipping service or a trac
 ```yml
 en:
   helpers:
-    error:
+    message:
       crm_form_presenter:
         invalid: 'The field <strong>%{field}</strong> is invalid.'
         blank: 'The field <strong>%{field}</strong> should not be empty.'
         inclusion: 'The field <strong>%{field}</strong> is set to an incorrect value.'
         email: 'The given email is in incorrect format. It should have the form <i>aa@bb.cc</i>'
+        success: 'The form was send successfully.'
 ```
 
 The field variable is passed to the localzier and containes the attribute name locale or its name in the crm if not set.
 
 E.g. the attribute *custom_attribute_1* with the locale *Foo* will reslut in `The field Foo is invalid`. If it is not set the result will be `The field custom_attribute_1 is invalid.`
+
+The code `success` is used if the form has no errors and no errors occurred.
 
 ## Customization
 
