@@ -12,10 +12,10 @@ class CrmFormPresenter
     @params = request.params["crm_form_presenter"]
     @dynamic_params = set_dynamic_params
     @access_code = generate_random_string(12)
-    errors = validate_params
+    errors = (request.post? || !@params.nil?) ? validate_params : nil
 
     if errors.present?
-      return {status: "error", message: errors}
+      controller.redirect_to("/#{@page.id}", alert: { status: "error", message: errors, widget_id: @widget.id })
     elsif request.post? && widget.id == @params[:widget_id]
       request.session['access_via_form'] = @access_code
       redirect_after_submit(controller, widget, self.submit)
@@ -28,7 +28,6 @@ class CrmFormPresenter
     else
       @params.delete('email')
     end
-    @params.delete('access_via_form')
 
     prepare_contact(@params['custom_email'], @params['custom_last_name'])
     prepare_activity_params
@@ -47,6 +46,7 @@ class CrmFormPresenter
       @params.delete(:custom_file)
     end
 
+    @params.delete('access_via_form')
     @params.delete("widget_id")
     @params["title"] = @params[:title].empty? ? @activity.id : @params[:title]
     @params["type_id"] = @activity.id
@@ -125,17 +125,18 @@ class CrmFormPresenter
 
   def redirect_after_submit(controller, widget, submit_message)
     if submit_message[:status] == "success"
-      controller.redirect_to(redirect_path(@page, widget), notice: submit_message[:message])
+      controller.redirect_to(redirect_path(@page, widget), notice: [submit_message[:message]])
     elsif submit_message[:status] == "error"
-      controller.redirect_to("/#{@page.id}", alert: submit_message[:message])
+      controller.redirect_to("/#{@page.id}", alert: [submit_message[:message]])
     end
   end
 
   def validate_params
-    return false if @params.nil?
-    email = valid_email?(@params['custom_email'])
-    hook = Obj.respond_to?('crm_form_validation') ? Obj.crm_form_validation(@params) : false
-    !email || hook
+    email = valid_email?(@params['custom_email']) ? [] : [{attribute: 'custom_email', message: 'The email is not a valid email address.', code: 'email'}]
+    hook = Obj.respond_to?('crm_form_validation_hook') ? Obj.crm_form_validation_hook(@params, @widget) : []
+    crm = @widget.validate(@params)
+
+    email + hook + crm
   end
 
   def valid_email?(email)

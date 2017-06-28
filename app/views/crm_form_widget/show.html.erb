@@ -1,4 +1,7 @@
 <% if widget.activity_id? %>
+  <% if(flash[:alert] && ScrivitoCrmFormWidget.configuration.show_error_message && (flash[:alert]['widget_id'] == widget.id)) %>
+    <%= render 'crm_form_widget/error_messages' %>
+  <% end %>
   <%= render 'crm_form_widget/form', widget: widget %>
 <% else %>
   <div class="alert alert-warning">
