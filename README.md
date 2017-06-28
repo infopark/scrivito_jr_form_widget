@@ -22,7 +22,7 @@ If the selected activity type has the fields `email` and `last_name`, a CRM cont
 
 The editor may also select an event on the details view of the widget. If the `email` and `last_name` fields exist, a corresponding CRM contact is be added to the event as an event contact.
 
-## Localization
+### Localization
 
 The following code represents the default localization for English. Copy it to your `en.yml` and change it if necessary:
 
@@ -71,6 +71,8 @@ en:
           three: Three
 ```
 
+For the options of enum and multienum fields, a `parameterize` is called. So an option like *more fields* will become *more_fields* in the localizer key.
+
 You can also set locals for a placeholder. This is only available for Text and Textarea fields:
 
 ```yaml
@@ -80,12 +82,50 @@ en:
       crm_form_presenter:
         custom_attribute_1: Foo
         custom_attribute_2: Bar
-        custom_enum_attribute: Enum
-        custom_enum_attribute_options:
-          one: One
-          two: Two
-          three: Three
 ```
+
+### Do it your own
+
+This gem provides two hooks. A `before_send` and a `validation` hook.
+Both are defined in your `obj.rb`:
+
+```ruby
+# before_send hook
+def self.crm_form_before_send_hook(params, activity)
+  do_some_advaced_stuff
+end
+
+# validation hook
+def self.crm_form_validation_hook(params, widget)
+  errors = []
+  params.each do |name, value|
+    errors << {attribute: name, message: "The #{name} attribute is invalid.", code: "invalid"} if(your_check(value))
+  end
+  return errors
+end
+```
+
+The `validation` hook checks if the inserted data of a form send is correct. It returns an array of the errors defined by a hash.
+
+The `before_send` hook is called before storing the data in the crm. So if the validation fails, this method is not called.
+This hook can be used to add third party tools like a shipping service or a tracking services.
+
+#### Localizing the validation messages
+
+```yml
+en:
+  helpers:
+    error:
+      crm_form_presenter:
+        invalid: 'The field <strong>%{field}</strong> is invalid.'
+        blank: 'The field <strong>%{field}</strong> should not be empty.'
+        inclusion: 'The field <strong>%{field}</strong> is set to an incorrect value.'
+        email: 'The given email is in incorrect format. It should have the form <i>aa@bb.cc</i>'
+```
+
+The field variable is passed to the localzier and containes the attribute name locale or its name in the crm if not set.
+
+E.g. the attribute *custom_attribute_1* with the locale *Foo* will reslut in `The field Foo is invalid`. If it is not set the result will be `The field custom_attribute_1 is invalid.`
 
 ## Customization
 
@@ -162,10 +202,13 @@ Create an initializer and add the following:
 
 ScrivitoCrmFormWidget.configure do |config|
   config.hidden_attributes = ['origin','referrer','tracking','service']
+  config.show_error_message = true
 end
 ```
 
 `hidden_attributes` contains all your crm attributes that will be rendered as hidden fields. They will be filled with a parameter in your url. Be aware that you do not add `custom_` to the values. To save your attribute in an activity, add it to the type configuration. In a link to the page with the form, add the parameter, e.g. `https://your_page.com/page_with_form?origin=facebook`.
+
+The `show_error_message` attribute is to controll a flash message on the form. Set it to false if you have your own error notice or you use an ajax form send.
 
 ### Attributes
 
