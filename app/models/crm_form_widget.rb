@@ -97,8 +97,7 @@ class CrmFormWidget < Widget
     I18n.exists?(local) ? I18n.t(local) : nil
   end
 
-  def hidden?(name, options, request)
-    param_given = !options[:visible_in_form] && request.params[name.sub(/^custom_/,'')].present?
-    param_given || ScrivitoCrmFormWidget.configuration.hidden_attributes.include?(name.sub(/^custom_/,''))
+  def hidden?(name, options)
+    !options[:visible_in_form] || ScrivitoCrmFormWidget.configuration.hidden_attributes.include?(name.sub(/^custom_/,''))
   end
 end
