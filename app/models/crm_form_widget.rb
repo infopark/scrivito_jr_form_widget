@@ -85,7 +85,7 @@ class CrmFormWidget < Widget
   end
 
   def field_as_select?(options)
-    columns == 'two' || options['valid_values'].count > 4
+    columns == 'two' || options['valid_values'].count > ScrivitoCrmFormWidget.configuration.as_select_field
   end
 
   def file_upload?

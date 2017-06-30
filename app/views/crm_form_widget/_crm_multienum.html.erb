@@ -1,13 +1,17 @@
 <div class="form-group form-field-<%= name %>">
   <%= form.label name.to_sym, label, class: "control-label col-sm-3 #{options[:mandatory] ? 'mandatory' : ''}" %>
   <div class="col-sm-9">
-    <% options['valid_values'].each do |value| %>
-      <div class="checkbox">
-        <%= form.label "#{name}_#{value.parameterize}" do %>
-          <%= form.check_box name.to_sym, {:multiple => true, id: "crm_form_presenter_#{name}_#{value.parameterize}", required: options[:mandatory] }, value, nil %>
-          <%= t("helpers.label.crm_form_presenter.#{name}_option.#{value.parameterize}", default: value) %>
-        <% end %>
-      </div>
+    <% if widget.field_as_select?(options) %>
+      <%= form.select(name.to_sym, options_for_select(options['valid_values'].map { |u| [t("helpers.label.crm_form_presenter.#{name}_option.#{u.parameterize}"), u] }), {}, class: 'form-control', required: options[:mandatory] ) %>
+    <% else %>
+      <% options['valid_values'].each do |value| %>
+        <div class="checkbox">
+          <%= form.label "#{name}_#{value.parameterize}" do %>
+            <%= form.check_box name.to_sym, {:multiple => true, id: "crm_form_presenter_#{name}_#{value.parameterize}", required: options[:mandatory] }, value, nil %>
+            <%= t("helpers.label.crm_form_presenter.#{name}_option.#{value.parameterize}", default: value) %>
+          <% end %>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>
