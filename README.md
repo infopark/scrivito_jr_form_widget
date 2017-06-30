@@ -86,7 +86,7 @@ en:
 
 ### Do it your own
 
-This gem provides two hooks. A `before_send` and a `validation` hook.
+This gem provides three hooks. A `before_send`, a `validation` hook and a `additional_hidden_attributes` hook.
 Both are defined in your `obj.rb`:
 
 ```ruby
@@ -103,15 +103,23 @@ def self.crm_form_validation_hook(params, widget)
   end
   return errors
 end
+
+# additional_hidden_attributes hook
+def self.additional_hidden_attributes(form, widget, request)
+  form.hidden_field(:custom_ip_address, value: request.remote_ip) if (widget.attributes.select {|a| a == 'custom_ip_address'}).any?
+end
 ```
 
 The `before_send` hook is called before storing the data in the crm. So if the validation fails, this method is not called.
 This hook can be used to add third party tools like a shipping service or a tracking services.
 
-
 The `validation` hook checks if the inserted data of a form send is correct. It returns an array of the errors defined by a hash.
 
 The `code` of the error message hash is used by the internal message system and can be defined in your localizer. E.g. a check of a customer id that should have a specific layout can result in `customer_id: 'The customer_id is not in a valid form. It should start with <strong>xyz-</strong>.'`.
+
+`additional_hidden_attributes` can be helpful to add more hidden attributes that are needed for special user tracking in the crm or colleting informations for third party services added with the `before_send` hook. Add fields you render here to the hidden field config.
+
+But be carefully about legal issues. Storing the ip address like in the exapnle can cause problems with data protection in some countries.
 
 #### Localizing the validation messages
 
@@ -211,12 +219,15 @@ Create an initializer and add the following:
 ScrivitoCrmFormWidget.configure do |config|
   config.hidden_attributes = ['origin','referrer','tracking','service']
   config.show_error_message = true
+  config.as_select_field = 4
 end
 ```
 
 `hidden_attributes` contains all your crm attributes that will be rendered as hidden fields. They will be filled with a parameter in your url. Be aware that you do not add `custom_` to the values. To save your attribute in an activity, add it to the type configuration. In a link to the page with the form, add the parameter, e.g. `https://your_page.com/page_with_form?origin=facebook`.
 
 The `show_error_message` attribute is to controll a flash message on the form. Set it to false if you have your own error notice or you use an ajax form send.
+
+`as_select_field` controls if an enum or multienum field is rendered as an select or radiobuttons/checkboxes. It is an integer. If the count of the valid values of the attribute is larger, the field is rendered as a select box.
 
 ### Attributes
 
