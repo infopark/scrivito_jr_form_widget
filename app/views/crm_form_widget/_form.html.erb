@@ -14,6 +14,12 @@
     </div>
   </div>
 
+  <% ScrivitoCrmFormWidget.configuration.hidden_attributes.each do |a| %>
+    <% if request.params[a.sub(/^custom_/,'')].present? %>
+      <%= form.hidden_field(a.to_sym, value: request.params[a.sub(/^custom_/,'')]) %>
+    <% end %>
+  <% end  %>
+
   <% if widget.multilevel? %>
     <div class="crm-form-widget-multilevel">
       <% widget.levels.each do |level| %>

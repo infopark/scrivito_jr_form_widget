@@ -1,10 +1,6 @@
 <% attributes.each do |name, options| %>
   <% CrmFormPresenter.send(:attr_accessor, name.to_sym) %>
-  <% if widget.hidden?(name, options) %>
-    <% if request.params[name.sub(/^custom_/,'')].present? %>
-      <%= form.hidden_field(name.to_sym, value: request.params[name.sub(/^custom_/,'')]) %>
-    <% end %>
-  <% elsif options && options[:visible_in_form] %>
+  <% if options && options[:visible_in_form] && !widget.hidden?(name, options) %>
     <%= render "crm_form_widget/crm_#{options["attribute_type"]}", form: form, name: name, options: options, label: nil, widget: widget %>
   <% end %>
 <% end %>
